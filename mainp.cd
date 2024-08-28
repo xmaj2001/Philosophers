@@ -1,0 +1,94 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mainp.cd                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/28 06:26:07 by xjose             #+#    #+#             */
+/*   Updated: 2024/08/28 10:46:09 by xjose            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+# include "./tydate.h"
+
+void *philo(void *data)
+{
+    t_date *date;
+    int i;
+    
+    date = (t_date *)data;
+    i = 0;
+    while (1)
+    {
+        if (date->eat == 0)
+        {
+            printf("philo %d is thinking\n", date->id);
+            usleep(date->time_sleep * 1000);
+        }
+        pthread_mutex_lock(date->fork_left);
+        printf("philo %d pegou o fork esquerdo\n", date->id);
+        pthread_mutex_lock(date->fork_right);
+        printf("philo %d pegou o fork direito\n", date->id);
+        printf("philo %d is eating\n", date->id);
+        usleep(date->time_eat * 1000);
+        printf("philo %d is sleeping\n", date->id);
+        usleep(date->time_sleep * 1000);
+        date->eat = 1;
+        pthread_mutex_unlock(date->fork_left);
+        pthread_mutex_unlock(date->fork_right);
+        if (date->eat == 1)
+            break;
+    }   
+}
+
+int main(int c, char *v[])
+{
+    t_date *date;
+    int i;
+    pthread_mutex_t *fork;
+    
+    if (c == 5 || c == 6)
+    {
+        date = malloc(sizeof(t_date) * atoi(v[1]));
+        fork = malloc(sizeof(pthread_mutex_t) * atoi(v[1]));
+        i = 0;
+        if(date == NULL)
+            exit(1);
+        if(fork == NULL)
+            exit(1);
+        while (i < atoi(v[1]))
+        {
+            pthread_mutex_init(&fork[i], NULL);
+            i++;
+        }
+        i = 0;
+        while (i < atoi(v[1]))
+        {
+            date[i].id = i + 1;
+            date[i].time_to_die = atoi(v[2]);
+            date[i].time_eat = atoi(v[3]);
+            date[i].time_sleep = atoi(v[4]);
+            date[i].eat = 0;
+            date[i].fork_left = &fork[i];
+            date[i].fork_right = &fork[(i + 1) % atoi(v[1])];
+            pthread_create(&date[i].philo, NULL, &philo, &date[i]);
+            i++;
+        }
+        i = 0;
+        while (i < atoi(v[1]))
+        {
+            pthread_join(date[i].philo, NULL);
+            i++;
+        }
+        free(date);
+        i = 0; 
+        while (i < atoi(v[1]))
+        {
+            pthread_mutex_destroy(&fork[i]);
+            i++;
+        }
+        free(fork);
+    }
+    return 0;
+}
