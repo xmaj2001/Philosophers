@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:14:22 by xjose             #+#    #+#             */
-/*   Updated: 2024/08/28 10:32:04 by xjose            ###   ########.fr       */
+/*   Updated: 2024/08/28 14:00:46 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <pthread.h>
-# include "./ft_printf/ft_printf.h"
+# include <sys/time.h>
 
 enum e_state
 {

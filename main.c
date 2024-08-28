@@ -6,40 +6,110 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 06:26:07 by xjose             #+#    #+#             */
-/*   Updated: 2024/08/28 13:15:32 by xjose            ###   ########.fr       */
+/*   Updated: 2024/08/28 14:23:14 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./philo.h"
 
+
+long get_time_in_ms(void) {
+    struct timeval current_time;
+	
+    gettimeofday(&current_time, NULL);
+    long milliseconds = current_time.tv_sec * 1000 + current_time.tv_usec / 1000;
+    return milliseconds;
+}
+
+
 void *philo_live(void *date)
 {
 	t_philo *philo = (t_philo *)date;
+	long start;
+
+	start = get_time_in_ms();
 	while (1)
 	{
-		if (philo->state == THINKING)
+		if((get_time_in_ms() - start) >= philo->time_to_die)
 		{
-			printf("philo %d esta pensando\n", philo->id);
-			usleep(philo->time_to_die * 1000);
+			philo->state = DIED;
+			printf("%ld philo %d morreu\n",get_time_in_ms() - start, philo->id);
+			return (NULL);
 		}
-		pthread_mutex_lock(philo->fork_left);
-		printf("philo %d pegou o fork esquerdo\n", philo->id);
-		pthread_mutex_lock(philo->fork_right);
-		printf("philo %d pegou o fork direito\n", philo->id);
-		printf("philo %d esta comendo\n", philo->id);
-		philo->state = EATING;
-		usleep(philo->time_to_eat * 1000);
-		printf("philo %d levanta-se\n", philo->id);
-		philo->state = SLEEPING;
-		usleep(philo->time_to_sleep * 1000);
-		printf("philo %d ira dormir\n", philo->id);
-		philo->state = THINKING;
-		pthread_mutex_unlock(philo->fork_left);
-		pthread_mutex_unlock(philo->fork_right);
-		philo->eat_count--;
-		if (philo->eat_count <= 0)
-			break;
+		if (philo->state == THINKING)
+			printf("%ld philo %d esta pensando\n",get_time_in_ms() - start, philo->id);
+		if (philo->id == 1)
+		{
+			if((get_time_in_ms() - start) >= philo->time_to_die)
+		{
+			philo->state = DIED;
+			printf("%ld philo %d morreu\n",get_time_in_ms() - start, philo->id);
+			return (NULL);
+		}
+			pthread_mutex_lock(philo->fork_right);
+			printf("%ld philo %d pegou o manbo direito\n",get_time_in_ms() - start,philo->id);
+			if((get_time_in_ms() - start) >= philo->time_to_die)
+		{
+			philo->state = DIED;
+			printf("%ld philo %d morreu\n",get_time_in_ms() - start, philo->id);
+			return (NULL);
+		}
+			pthread_mutex_lock(philo->fork_left);
+			if((get_time_in_ms() - start) >= philo->time_to_die)
+		{
+			philo->state = DIED;
+			printf("%ld philo %d morreu\n",get_time_in_ms() - start, philo->id);
+			return (NULL);
+		}
+			printf("%ld philo %d pegou o manbo esquerdo\n",get_time_in_ms() - start, philo->id);
+			printf("%ld philo %d esta comendo\n",get_time_in_ms() - start, philo->id);
+			philo->state = EATING;
+			usleep(philo->time_to_eat * 1000);
+			printf("%ld philo %d levantou\n",get_time_in_ms() - start, philo->id);
+			philo->state = SLEEPING;
+			if((get_time_in_ms() - start) >= philo->time_to_die)
+		{
+			philo->state = DIED;
+			printf("%ld philo %d morreu\n",get_time_in_ms() - start, philo->id);
+			return (NULL);
+		}
+			usleep(philo->time_to_sleep * 1000);
+			printf("%ld philo %d foi ferra\n",get_time_in_ms() - start, philo->id);
+			philo->state = THINKING;
+			if((get_time_in_ms() - start) >= philo->time_to_die)
+		{
+			philo->state = DIED;
+			printf("%ld philo %d morreu\n",get_time_in_ms() - start, philo->id);
+			return (NULL);
+		}
+			pthread_mutex_unlock(philo->fork_left);
+			pthread_mutex_unlock(philo->fork_right);
+			philo->eat_count--;
+			if (philo->eat_count <= 0)
+				break;
+		}
+		else
+		{
+			pthread_mutex_lock(philo->fork_left);
+			printf("%ld philo %d pegou o manbo esquerdo\n",get_time_in_ms() - start, philo->id);
+			pthread_mutex_lock(philo->fork_right);
+			printf("%ld philo %d pegou o manbo direito\n",get_time_in_ms() - start, philo->id);
+			printf("%ld philo %d esta comendo\n",get_time_in_ms() - start, philo->id);
+			philo->state = EATING;
+			usleep(philo->time_to_eat * 1000);
+			printf("%ld philo %d levantou\n",get_time_in_ms() - start, philo->id);
+			philo->state = SLEEPING;
+			usleep(philo->time_to_sleep * 1000);
+			printf("%ld philo %d foi ferra\n",get_time_in_ms() - start, philo->id);
+			philo->state = THINKING;
+			pthread_mutex_unlock(philo->fork_left);
+			pthread_mutex_unlock(philo->fork_right);
+			philo->eat_count--;
+			if (philo->eat_count <= 0)
+				break;
+		}
 	}
+	
 }
 
 void init_philo(t_philo *philo, pthread_mutex_t *fork, int c, char **v)
@@ -90,7 +160,7 @@ int main(int c, char *v[])
 {
 	t_philo *philo;
 	pthread_mutex_t *fork;
-	int	i;
+	int i;
 
 	i = 0;
 	if (c == 5 || c == 6)
