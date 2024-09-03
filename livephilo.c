@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 13:33:47 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/02 19:44:44 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/03 07:49:35 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,9 @@ void *philo_live(void *date)
 		philo->time_to_die += max_live;
 	}
     usleep(1000);
-    pthread_mutex_unlock(philo->fork_left);
-    pthread_mutex_unlock(philo->fork_right);
+	if (philo->fork_left)
+    	pthread_mutex_unlock(philo->fork_left);
+	if (philo->fork_right)
+    	pthread_mutex_unlock(philo->fork_right);
 	return (NULL);
 }
