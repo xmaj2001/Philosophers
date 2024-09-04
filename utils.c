@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:44:26 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/02 19:47:50 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/03 12:59:35 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,4 @@ int	ft_atoi(const char *nptr)
 		nptr++;
 	}
 	return (nbr * sign);
-}
-
-void	free_all(pthread_mutex_t *forks, t_philo *philo, int nbr_philo)
-{
-	int i;
-
-	i = 0;
-	while (i < nbr_philo)
-		pthread_mutex_destroy(&forks[i++]);
-	free(forks);
-	free(philo);
 }
