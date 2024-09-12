@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 13:39:51 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/12 10:22:46 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/12 12:12:34 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ static void	philo_state_eating(t_philo *philo)
 	philo->last_time_eat = get_time_now();
 	pthread_mutex_lock(&philo->sys->system_mutex);
 	if (!philo->sys->system)
-		printf("TIME[\033[0;33m%lld\033[0m] PHILO {%d} %s\t\n", time_ms(philo),
-			philo->id + 1, "\033[0;36mis eating\033[0m");
+		printf("TIME[\033[0;33m%lld\033[0m] PHILO {%d} %s\t\n", time_ms(philo), philo->id
+			+ 1, "\033[0;36mis eating\033[0m");
 	philo->nbr_eat += 1;
 	if (philo->nbr_eat == philo->sys->nbr_max_eat)
 		philo->sys->count_philo_eat += 1;
