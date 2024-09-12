@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 09:26:41 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/12 09:00:12 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/12 10:33:14 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	main(int c, char *v[])
 	int			i;
 
 	i = 0;
-	sys.nbr_philos = 0;
+	memset(&sys, 0, sizeof(t_sys));
 	if (c != 5 && c != 6)
 		return (1);
 	init_system(&sys, c, v);
