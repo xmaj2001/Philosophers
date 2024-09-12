@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 09:26:41 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/12 08:17:03 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/12 09:00:12 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	system_start(t_sys *sys)
 	while (i < sys->nbr_philos)
 		pthread_mutex_destroy(&sys->forks[i++]);
 	free(sys->forks);
+	pthread_mutex_destroy(&sys->system_mutex);
 }
 
 int	main(int c, char *v[])
