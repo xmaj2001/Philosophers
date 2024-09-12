@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 09:26:41 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/12 10:33:14 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/12 10:42:26 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,8 @@ void	system_start(t_sys *sys)
 	int i;
 
 	i = 0;
-	sys->start_time = get_time_now();
 	while (i < sys->nbr_philos)
 	{
-		sys->philos[i].last_time_eat = sys->start_time;
 		pthread_join(sys->philos[i].philo, NULL);
 		pthread_mutex_destroy(&sys->philos[i].cheack);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 13:33:47 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/12 10:29:06 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/12 10:38:22 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	*task_death(void *data)
 	long long	time;
 
 	philo = (t_philo *)data;
+	time = 0;
 	while (!philo->sys->system)
 	{
 		pthread_mutex_lock(&philo->cheack);
