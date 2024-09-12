@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 13:21:55 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/12 08:16:55 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/12 10:08:24 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void	init_thread(t_sys *sys)
 	pthread_t	task;
 
 	i = 0;
-	
 	while (i < sys->nbr_philos)
 	{
 		pthread_create(&sys->philos[i].philo, NULL, philo_life,

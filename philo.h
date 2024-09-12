@@ -6,12 +6,12 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 09:27:37 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/12 07:43:24 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/12 09:53:57 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HEADER_H
-# define HEADER_H
+#ifndef PHILO_H
+# define PHILO_H
 
 # include <pthread.h>
 # include <stdio.h>

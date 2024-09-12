@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/02 13:39:51 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/12 08:27:33 by xjose            ###   ########.fr       */
+/*   Created: 2024/08/02 13:39:51 by xjose             #+#    #+#             */
+/*   Updated: 2024/09/12 09:57:13 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	philo_state_eating(t_philo *philo)
 	time = time_ms(philo);
 	if (!philo->sys->system)
 		printf("TIME[\033[0;33m%lld\033[0m] PHILO {%d} %s\t\n", time, philo->id
-			+ 1, "\033[0;34mis eating\033[0m");
+			+ 1, "\033[0;36mis eating\033[0m");
 	philo->nbr_eat += 1;
 	if (philo->nbr_eat == philo->sys->nbr_max_eat)
 		philo->sys->count_philo_eat += 1;
