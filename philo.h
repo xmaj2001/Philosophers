@@ -5,75 +5,59 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/28 08:14:22 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/03 22:16:30 by xjose            ###   ########.fr       */
+/*   Created: 2024/08/04 09:27:37 by xjose             #+#    #+#             */
+/*   Updated: 2024/09/12 07:43:24 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef HEADER_H
+# define HEADER_H
 
 # include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
 
-enum				e_state
+typedef struct s_sys
 {
-	THINKING,
-	TAKE_FORKS,
-	EATING,
-	SLEEPING,
-	DIED
-};
+	int				nbr_philos;
+	int				time_to_death;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				nbr_max_eat;
+	int				system;
+	int				count_philo_eat;
+	long long		start_time;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	system_mutex;
+	struct s_philo	*philos;
+}					t_sys;
 
 typedef struct s_philo
 {
 	int				id;
-	enum e_state	state;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
-	long			last_meal;
-	int				did;
-	int				didx;
-	struct s_philo	*philo;
-	int				eat_max;
-	int				eat;
-	pthread_mutex_t	*fork_left;
-	pthread_mutex_t	*fork_right;
-	pthread_t		thread;
+	int				nbr_eat;
+	long long		last_time_eat;
+	pthread_t		philo;
+	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	*right_fork;
+	pthread_mutex_t	cheack;
+	struct s_sys	*sys;
 }					t_philo;
 
-typedef struct s_args
-{
-	int				argc;
-	char			**argv;
-}					t_args;
+void				init_system(t_sys *sys, int c, char *v[]);
+void				init_thread(t_sys *sys);
 
-void				init_forks(pthread_mutex_t *fork, int nbr_philo);
-void				init_philos(t_philo *philo, int nbr_philo,
-						pthread_mutex_t *fork, t_args args);
-void				*philo_live(void *date);
+void				*task_eat(void *data);
+void				*task_death(void *data);
+void				*philo_life(void *data);
 
-int					philo_thinking(t_philo *philo);
-int					philo_take_forks(t_philo *philo);
-int					philo_eating(t_philo *philo);
-int					philo_sleeping(t_philo *philo, long tmp_did);
-int					philo_died(t_philo *philo);
+void				print_states(t_philo *philo, char *states);
 
-long				get_time_in_ms(void);
-void				free_all(pthread_mutex_t *forks, t_philo *philo,
-						int nbr_philo);
+long long			get_time_now(void);
+long long			time_ms(t_philo *philo);
+
 int					ft_atoi(const char *nptr);
-
-void				log_thinking(t_philo *philo);
-void				log_forks(t_philo *philo, int fork);
-void				log_eating(t_philo *philo);
-void				log_sleeping(t_philo *philo);
-void				log_died(t_philo *philo);
-
-void				*analyzing_philosophy(void *philo_date);
-
 #endif

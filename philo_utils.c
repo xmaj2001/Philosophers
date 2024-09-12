@@ -6,19 +6,32 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 12:57:17 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/03 13:33:05 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/12 08:29:18 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./philo.h"
 
-void	free_all(pthread_mutex_t *forks, t_philo *philo, int nbr_philo)
+long long	get_time_now(void)
 {
-	int i;
+	struct timeval	timer;
 
-	i = 0;
-	while (i < nbr_philo)
-		pthread_mutex_destroy(&forks[i++]);
-	free(forks);
-	free(philo);
+	gettimeofday(&timer, NULL);
+	return (timer.tv_sec * 1000 + timer.tv_usec / 1000);
+}
+
+long long	time_ms(t_philo *philo)
+{
+	return (get_time_now() - philo->sys->start_time);
+}
+void	print_states(t_philo *philo, char *states)
+{
+	long long	ms;
+
+	pthread_mutex_lock(&philo->sys->system_mutex);
+	ms = time_ms(philo);
+	if (!philo->sys->system)
+		printf("TIME[\033[0;33m%lld\033[0m] PHILO {%d} %s\t\n", ms, philo->id
+			+ 1, states);
+	pthread_mutex_unlock(&philo->sys->system_mutex);
 }

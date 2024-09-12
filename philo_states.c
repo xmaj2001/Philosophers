@@ -6,81 +6,65 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 13:39:51 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/03 22:34:33 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/12 08:27:33 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./philo.h"
 
-int	philo_thinking(t_philo *philo)
+static void	philo_state_thinking(t_philo *philo)
 {
-	if (philo->philo->did == 0)
-		printf("[TIME:%dms] ",  get_time_in_ms() - philo->last_meal);printf("Filósofo \033[0;32m[%d] está pensando\033[0m\n", philo->id);
-	philo->state = THINKING;
-	return (philo->philo->did);
+	print_states(philo, "\033[0;32mis thinking\033[0m");
 }
 
-int	philo_take_forks(t_philo *philo)
+static void	philo_state_pick_up_fork(t_philo *philo)
 {
-	if (philo->id == 1)
+	pthread_mutex_lock(philo->left_fork);
+	print_states(philo, "\033[0;33mpick up left fork\033[0m");
+	pthread_mutex_lock(philo->right_fork);
+	print_states(philo, "\033[0;33mpick up right fork\033[0m");
+}
+
+static void	philo_state_eating(t_philo *philo)
+{
+	long long	time;
+
+	pthread_mutex_lock(&philo->cheack);
+	philo->last_time_eat = get_time_now();
+	pthread_mutex_lock(&philo->sys->system_mutex);
+	time = time_ms(philo);
+	if (!philo->sys->system)
+		printf("TIME[\033[0;33m%lld\033[0m] PHILO {%d} %s\t\n", time, philo->id
+			+ 1, "\033[0;34mis eating\033[0m");
+	philo->nbr_eat += 1;
+	if (philo->nbr_eat == philo->sys->nbr_max_eat)
+		philo->sys->count_philo_eat += 1;
+	pthread_mutex_unlock(&philo->sys->system_mutex);
+	usleep(philo->sys->time_to_eat * 1000);
+	pthread_mutex_unlock(philo->right_fork);
+	pthread_mutex_unlock(philo->left_fork);
+	pthread_mutex_unlock(&philo->cheack);
+}
+
+static void	philo_state_sleeping(t_philo *philo)
+{
+	print_states(philo, "\033[0;36mis sleeping\033[0m");
+	usleep(philo->sys->time_to_sleep * 1000);
+}
+
+void	*philo_life(void *data)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)data;
+	if (philo->id % 2 == 0)
+		usleep(philo->sys->time_to_eat * 1000);
+	while (!philo->sys->system)
 	{
-		pthread_mutex_lock(philo->fork_right);
-		if (philo->philo->did == 0)
-			printf("[TIME:%dms] ",  get_time_in_ms() - philo->last_meal);printf("Filósofo \033[0;33m[%d] pegou o garfo esquerdo\033[0m\n",
-				philo->id);
-		pthread_mutex_lock(philo->fork_left);
-		if (philo->philo->did == 0)
-			printf("[TIME:%dms] ",  get_time_in_ms() - philo->last_meal);printf("Filósofo \033[0;33m[%d] pegou o garfo direito\033[0m\n",
-				philo->id);
+		philo_state_thinking(philo);
+		philo_state_pick_up_fork(philo);
+		philo_state_eating(philo);
+		philo_state_sleeping(philo);
 	}
-	else
-	{
-		pthread_mutex_lock(philo->fork_left);
-		if (philo->philo->did == 0)
-			printf("[TIME:%dms] ",  get_time_in_ms() - philo->last_meal);printf("Filósofo \033[0;33m[%d] pegou o garfo esquerdo\033[0m\n",
-				philo->id);
-		pthread_mutex_lock(philo->fork_right);
-		if (philo->philo->did == 0)
-			printf("[TIME:%dms] ",  get_time_in_ms() - philo->last_meal);printf("Filósofo \033[0;33m[%d] pegou o garfo direito\033[0m\n",
-				philo->id);
-	}
-	return (philo->philo->did);
-}
-
-int	philo_eating(t_philo *philo)
-{
-	if (philo->philo->did == 0)
-	{
-		printf("[TIME:%dms] ",  get_time_in_ms() - philo->last_meal);printf("Filósofo \033[0;34m[%d] está comendo\033[0m\n", philo->id);
-		if (philo->eat == 1 && philo->eat_max > 0)
-			philo->eat_max--;
-		usleep(philo->time_to_eat * 1000);
-		philo->state = EATING;
-		pthread_mutex_unlock(philo->fork_left);
-		pthread_mutex_unlock(philo->fork_right);
-	}
-	return (philo->philo->did);
-}
-
-int	philo_sleeping(t_philo *philo, long tmp_did)
-{
-	if (philo->philo->did == 0)
-		printf("[TIME:%dms] ",  get_time_in_ms() - philo->last_meal);printf("Filósofo \033[0;36m[%d] está dormindo\033[0m\n", philo->id);
-	usleep(philo->time_to_sleep * 1000);
-	philo->state = SLEEPING;
-	philo->time_to_die += tmp_did;
-	if (philo->eat == 1 && philo->eat_max <= 0)
-		return (1);
-	return (philo->philo->did);
-}
-
-int	philo_died(t_philo *philo)
-{
-	long	did;
-
-	did = (get_time_in_ms() - philo->last_meal);
-	if (did >= philo->time_to_die)
-		philo->philo->did = 1;
-	philo->state = DIED;
-	return (philo->philo->did);
+	return (NULL);
 }
