@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 13:33:47 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/12 10:18:45 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/12 10:29:06 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	*task_death(void *data)
 		pthread_mutex_lock(&philo->cheack);
 		time = get_time_now() - philo->last_time_eat;
 		pthread_mutex_lock(&philo->sys->system_mutex);
-		if (time == philo->sys->time_to_death && philo->sys->system == 0)
+		if (time >= philo->sys->time_to_death && philo->sys->system == 0)
 		{
 			printf("\033[0;31mTIME[%lld] PHILO (%d) %s\n", time_ms(philo),
 				philo->id + 1, "CUBOU\033[0m");
