@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 13:33:47 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/12 12:12:10 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/13 06:40:26 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,10 @@ void	*task_death(void *data)
 				pthread_mutex_unlock(philo->right_fork);
 			philo->sys->system = 1;
 		}
-		pthread_mutex_unlock(&philo->sys->system_mutex);
-		pthread_mutex_unlock(&philo->cheack);
+		if (&philo->sys->system_mutex)
+			pthread_mutex_unlock(&philo->sys->system_mutex);
+		if (&philo->cheack)
+			pthread_mutex_unlock(&philo->cheack);
 		usleep(100);
 	}
 	return (NULL);
