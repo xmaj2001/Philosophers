@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 09:26:41 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/13 07:40:08 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/13 08:50:20 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 void	system_start(t_sys *sys)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < sys->nbr_philos)
-	{
-		pthread_join(sys->philos[i].philo, NULL);
-		pthread_mutex_destroy(&sys->philos[i].cheack);
-		i++;
-	}
+		pthread_join(sys->philos[i++].philo, NULL);
+	pthread_join(sys->task_death, NULL);
+	i = 0;
+	while (i < sys->nbr_philos)
+		pthread_mutex_destroy(&sys->philos[i++].cheack);
 	free(sys->philos);
 	i = 0;
 	while (i < sys->nbr_philos)
@@ -31,17 +31,15 @@ void	system_start(t_sys *sys)
 	pthread_mutex_destroy(&sys->system_mutex);
 }
 
-
 int	main(int c, char *v[])
 {
-	t_sys		sys;
-	int			i;
+	t_sys	sys;
+	int		i;
 
 	i = 0;
 	memset(&sys, 0, sizeof(t_sys));
 	if (c != 5 && c != 6)
 		return (1);
-	printf("OLa\n");
 	init_system(&sys, c, v);
 	system_start(&sys);
 	return (0);

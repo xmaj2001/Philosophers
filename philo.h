@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 09:27:37 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/12 12:11:07 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/13 08:48:02 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_sys
 	int				count_philo_eat;
 	long long		start_time;
 	pthread_mutex_t	*forks;
+	pthread_t		task_death;
 	pthread_mutex_t	system_mutex;
 	struct s_philo	*philos;
 }					t_sys;
