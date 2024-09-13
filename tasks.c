@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 13:33:47 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/13 06:55:33 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/13 07:11:13 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,7 @@ void	*task_death(void *data)
 		{
 			printf("\033[0;31mTIME[%lld] PHILO (%d) %s\n", time_ms(philo),
 				philo->id + 1, "CUBOU\033[0m");
-			if (philo->left_fork)
-				pthread_mutex_unlock(philo->left_fork);
-			if (philo->right_fork)
-				pthread_mutex_unlock(philo->right_fork);
+			
 			philo->sys->system = 1;
 		}
 		usleep(100);
