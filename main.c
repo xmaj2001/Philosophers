@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 09:26:41 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/13 10:06:04 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/13 10:14:45 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,6 @@ int	main(int c, char *v[])
 		return (1);
 	init_system(&sys, c, v);
 	system_start(&sys);
+	system_destroy(&sys);
 	return (0);
 }
