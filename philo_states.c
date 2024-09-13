@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 13:39:51 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/13 07:17:18 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/13 07:19:18 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	*philo_life(void *data)
 		//philo_state_thinking(philo);
 		// philo_state_pick_up_fork(philo);
 		// philo_state_eating(philo);
-		// philo_state_sleeping(philo);
+		philo_state_sleeping(philo);
 	}
 	return (NULL);
 }
