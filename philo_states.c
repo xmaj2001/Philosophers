@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 13:39:51 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/13 07:26:04 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/13 08:59:50 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ static void	philo_state_eating(t_philo *philo)
 		philo->sys->count_philo_eat += 1;
 	pthread_mutex_unlock(&philo->sys->system_mutex);
 	usleep(philo->sys->time_to_eat * 1000);
-	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
+	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(&philo->cheack);
 }
 
