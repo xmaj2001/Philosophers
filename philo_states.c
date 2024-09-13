@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 13:39:51 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/13 07:07:40 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/13 07:09:37 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,17 @@ static void	philo_state_sleeping(t_philo *philo)
 
 void	*philo_life(void *data)
 {
-	// t_philo	*philo;
+	t_philo	*philo;
 
-	// philo = (t_philo *)data;
-	// if (philo->id % 2 == 0)
-	// 	usleep(philo->sys->time_to_eat * 1000);
-	// while (!philo->sys->system)
-	// {
-	// 	philo_state_thinking(philo);
-	// 	philo_state_pick_up_fork(philo);
-	// 	philo_state_eating(philo);
-	// 	philo_state_sleeping(philo);
-	// }
+	philo = (t_philo *)data;
+	if (philo->id % 2 == 0)
+		usleep(philo->sys->time_to_eat * 1000);
+	while (!philo->sys->system)
+	{
+		philo_state_thinking(philo);
+		// philo_state_pick_up_fork(philo);
+		// philo_state_eating(philo);
+		// philo_state_sleeping(philo);
+	}
 	return (NULL);
 }
