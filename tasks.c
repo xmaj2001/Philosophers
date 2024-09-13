@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 13:33:47 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/13 10:12:13 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/13 10:31:26 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,8 @@ void	*task_death(void *data)
 	philo = (t_philo *)data;
 	while (!philo->sys->system)
 	{
-		pthread_mutex_lock(&philo->cheack);
 		pthread_mutex_lock(&philo->sys->system_mutex);
-		if (get_time_now() - philo->last_time_eat >= philo->sys->time_to_death + 4
+		if (get_time_now() - philo->last_time_eat >= philo->sys->time_to_death
 			&& philo->sys->system == 0)
 		{
 			printf("\033[0;31mTIME[%lld] PHILO (%d) %s\n", time_ms(philo),
@@ -49,7 +48,6 @@ void	*task_death(void *data)
 			philo->sys->system = 1;
 		}
 		pthread_mutex_unlock(&philo->sys->system_mutex);
-		pthread_mutex_unlock(&philo->cheack);
 		usleep(1000);
 	}
 	return (NULL);
