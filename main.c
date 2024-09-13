@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 09:26:41 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/13 07:29:26 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/13 07:40:08 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	main(int c, char *v[])
 	if (c != 5 && c != 6)
 		return (1);
 	printf("OLa\n");
-	//init_system(&sys, c, v);
-	//system_start(&sys);
+	init_system(&sys, c, v);
+	system_start(&sys);
 	return (0);
 }

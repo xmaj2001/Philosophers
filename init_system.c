@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 13:21:55 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/13 07:01:04 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/13 07:40:19 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ void	init_thread(t_sys *sys)
 	{
 		pthread_create(&sys->philos[i].philo, NULL, philo_life,
 			&sys->philos[i]);
-		pthread_create(&task, NULL, task_death, &sys->philos[i]);
-		pthread_detach(task);
+		// pthread_create(&task, NULL, task_death, &sys->philos[i]);
+		// pthread_detach(task);
 		i++;
 	}
 	if (sys->nbr_max_eat != 0)
