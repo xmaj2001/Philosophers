@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 13:21:55 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/12 12:11:27 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/13 07:01:04 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	init_thread(t_sys *sys)
 {
 	int			i;
 	pthread_t	task;
+	pthread_t	thread_eat;
 
 	i = 0;
 	while (i < sys->nbr_philos)
@@ -79,7 +80,7 @@ void	init_thread(t_sys *sys)
 	}
 	if (sys->nbr_max_eat != 0)
 	{
-		pthread_create(&task, NULL, task_eat, sys);
-		pthread_detach(task);
+		pthread_create(&thread_eat, NULL, task_eat, sys);
+		pthread_detach(thread_eat);
 	}
 }
