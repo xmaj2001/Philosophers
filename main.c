@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 09:26:41 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/13 10:30:47 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/13 10:37:25 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,36 +14,28 @@
 
 void	system_start(t_sys *sys)
 {
-	int	i;
+	int i;
 
-	i = 0;
-	while (i < sys->nbr_philos)
-		pthread_join(sys->philos[i++].philo, NULL);
-	pthread_join(sys->task_death, NULL);
-}
-
-void	system_destroy(t_sys *sys)
-{
-	int	i;
-
-	i = 0;
-	while (i < sys->nbr_philos)
-		pthread_mutex_destroy(&sys->forks[i++]);
 	i = 0;
 	while (i < sys->nbr_philos)
 	{
-		pthread_mutex_destroy(&sys->forks[i]);
-		pthread_mutex_destroy(&sys->philos[i++].cheack);
-	}	
+		pthread_join(sys->philos[i].philo, NULL);
+		pthread_mutex_destroy(&sys->philos[i].cheack);
+		i++;
+	}
 	free(sys->philos);
+	i = 0;
+	while (i < sys->nbr_philos)
+		pthread_mutex_destroy(&sys->forks[i++]);
 	free(sys->forks);
 	pthread_mutex_destroy(&sys->system_mutex);
 }
 
+
 int	main(int c, char *v[])
 {
-	t_sys	sys;
-	int		i;
+	t_sys		sys;
+	int			i;
 
 	i = 0;
 	memset(&sys, 0, sizeof(t_sys));
@@ -51,6 +43,5 @@ int	main(int c, char *v[])
 		return (1);
 	init_system(&sys, c, v);
 	system_start(&sys);
-	system_destroy(&sys);
 	return (0);
 }

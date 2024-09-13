@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 13:21:55 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/13 10:26:26 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/13 10:38:00 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	init_system(t_sys *sys, int c, char *v[])
 void	init_thread(t_sys *sys)
 {
 	int			i;
+	pthread_t	task;
 	pthread_t	thread_eat;
 
 	i = 0;
@@ -73,7 +74,8 @@ void	init_thread(t_sys *sys)
 	{
 		pthread_create(&sys->philos[i].philo, NULL, philo_life,
 			&sys->philos[i]);
-		pthread_create(&sys->task_death, NULL, task_death, &sys->philos[i]);
+		pthread_create(&task, NULL, task_death, &sys->philos[i]);
+		pthread_detach(task);
 		i++;
 	}
 	if (sys->nbr_max_eat != 0)
