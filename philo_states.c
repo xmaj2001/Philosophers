@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 13:39:51 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/13 10:31:05 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/19 13:56:14 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ static void	philo_state_pick_up_fork(t_philo *philo)
 {
 	pthread_mutex_lock(philo->left_fork);
 	print_states(philo, "\033[0;33mpick up left fork\033[0m");
+	philo->left = 1;
 	pthread_mutex_lock(philo->right_fork);
 	print_states(philo, "\033[0;33mpick up right fork\033[0m");
+	philo->right = 1;
 }
 
 static void	philo_state_eating(t_philo *philo)
@@ -40,6 +42,8 @@ static void	philo_state_eating(t_philo *philo)
 	usleep(philo->sys->time_to_eat * 1000);
 	pthread_mutex_unlock(philo->right_fork);
 	pthread_mutex_unlock(philo->left_fork);
+	philo->left = 0;
+	philo->right = 0;
 	pthread_mutex_unlock(&philo->cheack);
 }
 

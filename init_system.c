@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 13:21:55 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/13 10:38:00 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/19 13:54:49 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,15 @@ static void	init_philos(t_sys *sys)
 		return ;
 	sys->start_time = get_time_now();
 	while (i < sys->nbr_philos)
+		pthread_mutex_init(&sys->forks[i++], NULL);
+	i = 0;
+	while (i < sys->nbr_philos)
 	{
 		sys->philos[i].id = i;
 		sys->philos[i].nbr_eat = 0;
+		sys->philos[i].left = 0;
+		sys->philos[i].right = 0;
 		sys->philos[i].last_time_eat = sys->start_time;
-		pthread_mutex_init(&sys->forks[i], NULL);
 		pthread_mutex_init(&sys->philos[i].cheack, NULL);
 		if (i == 0)
 			sys->philos[i].left_fork = &sys->forks[sys->nbr_philos - 1];

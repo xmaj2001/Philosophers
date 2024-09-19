@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 12:57:17 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/13 10:26:15 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/19 13:33:06 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,9 @@ long long	time_ms(t_philo *philo)
 }
 void	print_states(t_philo *philo, char *states)
 {
-	pthread_mutex_lock(&philo->cheack);
 	pthread_mutex_lock(&philo->sys->system_mutex);
 	if (!philo->sys->system)
 		printf("TIME[\033[0;33m%lld\033[0m] PHILO {%d} %s\t\n", time_ms(philo), philo->id
 			+ 1, states);
 	pthread_mutex_unlock(&philo->sys->system_mutex);
-	pthread_mutex_unlock(&philo->cheack);
 }

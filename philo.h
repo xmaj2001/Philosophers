@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 09:27:37 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/13 10:25:42 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/19 14:02:31 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ typedef struct s_sys
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				nbr_max_eat;
-	int				system;
+	_Atomic int				system;
+	int				system2;
 	int				count_philo_eat;
 	long long		start_time;
 	pthread_mutex_t	*forks;
@@ -44,6 +45,8 @@ typedef struct s_philo
 	pthread_t		philo;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
+	int left;
+	int right;
 	pthread_mutex_t	cheack;
 	struct s_sys	*sys;
 }					t_philo;

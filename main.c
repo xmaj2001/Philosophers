@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 09:26:41 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/13 10:37:25 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/19 14:05:29 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,15 @@ void	system_start(t_sys *sys)
 	while (i < sys->nbr_philos)
 	{
 		pthread_join(sys->philos[i].philo, NULL);
+		i++;
+	}
+	i =0;
+	while (i < sys->nbr_philos)
+	{
 		pthread_mutex_destroy(&sys->philos[i].cheack);
 		i++;
 	}
-	free(sys->philos);
+	//free(sys->philos);
 	i = 0;
 	while (i < sys->nbr_philos)
 		pthread_mutex_destroy(&sys->forks[i++]);

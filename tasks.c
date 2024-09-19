@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 13:33:47 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/13 10:34:46 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/19 14:11:43 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	*task_eat(void *data)
 		if (sys->count_philo_eat == sys->nbr_philos)
 			sys->system = 1;
 		pthread_mutex_unlock(&sys->system_mutex);
-		usleep(100);
+		usleep(1000);
 	}
 	return (NULL);
 }
@@ -41,9 +41,9 @@ void	*task_death(void *data)
 		{
 			printf("\033[0;31mTIME[%lld] PHILO (%d) %s\n", time_ms(philo),
 				philo->id + 1, "CUBOU\033[0m");
-			if (philo->right_fork)
+			if (philo->right == 1)
 				pthread_mutex_unlock(philo->right_fork);
-			if (philo->left_fork)
+			if (philo->left == 1)
 				pthread_mutex_unlock(philo->left_fork);
 			philo->sys->system = 1;
 		}
