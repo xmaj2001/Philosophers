@@ -5,17 +5,17 @@
 #                                                     +:+ +:+         +:+      #
 #    By: xjose <xjose@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/09/03 13:01:54 by xjose             #+#    #+#              #
-#    Updated: 2024/09/19 13:25:05 by xjose            ###   ########.fr        #
+#    Created: 2024/08/03 13:01:54 by xjose             #+#    #+#              #
+#    Updated: 2024/09/24 22:32:31 by xjose            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
-NAME		= app
+NAME		= philo
 
 FILE_SRC = *.c
 
-FLAGS		= -fsanitize=thread -g
+# FLAGS		= -fsanitize=thread -g
 
 CP			= cc
 

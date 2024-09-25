@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 08:44:26 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/09 12:23:27 by xjose            ###   ########.fr       */
+/*   Updated: 2024/09/24 21:44:04 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,18 @@ int	ft_atoi(const char *nptr)
 		nptr++;
 	}
 	return (nbr * sign);
+}
+
+void	x_usleep(t_philo *philo, int time_x)
+{
+	int i;
+
+	i = 0;
+	while (i < (time_x / 10))
+	{
+		if (is_dead(philo) == 1)
+			break;
+		usleep(10000);
+		i++;
+	}
 }
