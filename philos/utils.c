@@ -6,17 +6,17 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 08:44:26 by xjose             #+#    #+#             */
-/*   Updated: 2024/09/24 22:33:19 by xjose            ###   ########.fr       */
+/*   Updated: 2024/10/16 00:28:34 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "./philo.h"
+#include "./philo.h"
 
-static int	ft_isdigit(int c)
+int	ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
-		return 1;
-	return 0;
+		return (1);
+	return (0);
 }
 
 static int	ft_isspace(int c)
@@ -45,18 +45,4 @@ int	ft_atoi(const char *nptr)
 		nptr++;
 	}
 	return (nbr * sign);
-}
-
-void	x_usleep(t_philo *philo, int time_x)
-{
-	int i;
-
-	i = 0;
-	while (i < (time_x / 10))
-	{
-		if (is_dead(philo) == 1)
-			break;
-		usleep(10000);
-		i++;
-	}
 }

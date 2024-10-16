@@ -6,26 +6,28 @@
 #    By: xjose <xjose@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/03 13:01:54 by xjose             #+#    #+#              #
-#    Updated: 2024/09/24 22:32:31 by xjose            ###   ########.fr        #
+#    Updated: 2024/10/16 02:03:53 by xjose            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-
 NAME		= philo
 
-FILE_SRC = *.c
+FILE_SRC = main.c utils.c init.c philo_status.c philo_utils.c routines.c
 
-# FLAGS		= -fsanitize=thread -g
+FLAGS		= -Wall -Wextra -Werror
+
+objects		= $(FILE_SRC:.c=.o)
 
 CP			= cc
 
 all:$(NAME)
 
 $(NAME):
-	$(CP) $(FLAGS) $(FILE_SRC) -o $(NAME)
+	$(CP) $(FILE_SRC) $(FLAGS) -c
+	$(CP) $(objects) -o $(NAME)
 
 clean:
-	rm -f *.o
+	rm -f $(objects)
 
 fclean: clean
 	rm -f $(NAME)
@@ -33,8 +35,8 @@ fclean: clean
 re: fclean all
 
 rec: fclean all
-	rm -f *.o
+	rm -f $(objects)
 
 recc: fclean all
-	rm -f *.o
+	rm -f $(objects)
 	clear
