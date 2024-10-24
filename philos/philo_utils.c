@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 00:16:17 by xjose             #+#    #+#             */
-/*   Updated: 2024/10/16 00:28:55 by xjose            ###   ########.fr       */
+/*   Updated: 2024/10/24 13:50:58 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	print_status(t_philo *philo, char *states)
 	if (philo->sys->status == ON)
 	{
 		printf("TIME[\033[0;33m%lld\033[0m]", time_ms(philo));
-		printf("\t{%d}\t%s\t\n", philo->id, states);
+		printf("\t{%d}\t%s\t\n", philo->id + 1, states);
 	}
 	pthread_mutex_unlock(&philo->sys->print);
 }
