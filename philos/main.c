@@ -6,11 +6,13 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 00:29:11 by xjose             #+#    #+#             */
-/*   Updated: 2024/10/16 02:02:10 by xjose            ###   ########.fr       */
+/*   Updated: 2024/10/24 08:52:53 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <pthread.h>
+#include <time.h>
 
 static int	is_valid_arg(char *arg)
 {
@@ -33,13 +35,13 @@ static void	start_simulation(t_sys *sys)
 	i = 0;
 	pthread_create(&sys->death, NULL, monitor_death, sys);
 	while (i < sys->n_philos)
-	{
-		pthread_join(sys->philos[i].thread, NULL);
-		i++;
-	}
-	pthread_detach(sys->death);
-	free(sys->philos);
+		pthread_join(sys->philos[i++].thread, NULL);
+	pthread_join(sys->death, NULL);
+	i = 0;
+	while (i < sys->n_philos)
+		pthread_mutex_destroy(&sys->forks[i++]);
 	free(sys->forks);
+	free(sys->philos);
 }
 
 int	main(int argc, char **argv)

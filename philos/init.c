@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 23:57:00 by xjose             #+#    #+#             */
-/*   Updated: 2024/10/16 01:54:26 by xjose            ###   ########.fr       */
+/*   Updated: 2024/10/24 09:10:12 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void	init_arg(t_sys *sys, int argc, char **argv)
 {
 	sys->n_philos = ft_atoi(argv[1]);
+	sys->nt_philos = ft_atoi(argv[1]);
 	sys->t_die = ft_atoi(argv[2]);
 	sys->t_eat = ft_atoi(argv[3]);
 	sys->t_sleep = ft_atoi(argv[4]);
@@ -30,7 +31,8 @@ static void	init_mutex(t_sys *sys)
 	int	i;
 
 	pthread_mutex_init(&sys->print, NULL);
-	sys->forks = malloc(sizeof(pthread_mutex_t) * sys->n_philos);
+	sys->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
+			* sys->n_philos);
 	i = 0;
 	while (i < sys->n_philos)
 	{
@@ -46,13 +48,12 @@ static void	init_philos(t_sys *sys)
 
 	i = 0;
 	start_time = get_time_now();
-	sys->philos = malloc(sizeof(t_philo) * sys->n_philos);
+	sys->philos = (t_philo *)malloc(sizeof(t_philo) * sys->n_philos);
 	while (i < sys->n_philos)
 	{
 		sys->philos[i].start_time = start_time;
-		sys->philos[i].id = i + 1;
+		sys->philos[i].id = i;
 		sys->philos[i].eating = 0;
-		sys->philos[i].is_dead = 0;
 		sys->philos[i].last_meal = start_time;
 		if (i == 0)
 			sys->philos[i].left_fork = &sys->forks[sys->n_philos - 1];

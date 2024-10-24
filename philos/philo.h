@@ -6,7 +6,7 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 23:49:00 by xjose             #+#    #+#             */
-/*   Updated: 2024/10/16 01:55:17 by xjose            ###   ########.fr       */
+/*   Updated: 2024/10/24 09:09:31 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ enum				e_status
 typedef struct s_sys
 {
 	int				n_philos;
+	_Atomic int		nt_philos;
 	int				t_die;
 	int				t_eat;
 	int				t_sleep;
@@ -44,7 +45,6 @@ typedef struct s_philo
 	_Atomic long long	last_meal;
 	int					id;
 	_Atomic int			eating;
-	int					is_dead;
 	long long			start_time;
 	pthread_mutex_t		*left_fork;
 	pthread_mutex_t		*right_fork;
@@ -65,6 +65,7 @@ void				philo_pick_forks(t_philo *philo);
 void				philo_eating(t_philo *philo);
 void				philo_sleeping(t_philo *philo);
 void				print_status(t_philo *philo, char *states);
+void				philo_death(t_philo *philo);
 
 long long			time_ms(t_philo *philo);
 long long			get_time_now(void);
