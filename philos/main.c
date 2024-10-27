@@ -6,25 +6,19 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 00:29:11 by xjose             #+#    #+#             */
-/*   Updated: 2024/10/24 08:52:53 by xjose            ###   ########.fr       */
+/*   Updated: 2024/10/27 13:20:20 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <pthread.h>
-#include <time.h>
 
 static int	is_valid_arg(char *arg)
 {
-	int	i;
+	int	value;
 
-	i = 0;
-	while (arg[i])
-	{
-		if (!ft_isdigit(arg[i]))
-			return (0);
-		i++;
-	}
+	value = ft_atoi(arg);
+	if (value <= 0)
+		return (0);
 	return (1);
 }
 
