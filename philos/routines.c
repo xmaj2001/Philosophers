@@ -6,11 +6,12 @@
 /*   By: xjose <xjose@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 00:08:01 by xjose             #+#    #+#             */
-/*   Updated: 2024/10/27 13:19:06 by xjose            ###   ########.fr       */
+/*   Updated: 2024/10/27 13:36:39 by xjose            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <unistd.h>
 
 void	*philo_routine(void *arg)
 {
@@ -42,7 +43,7 @@ void	*monitor_death(void *arg)
 		i = 0;
 		while (i < sys->n_philos)
 		{
-			if (get_time_now() - sys->philos[i].last_meal >= sys->t_die)
+			if (get_time_now() - (sys->philos[i].last_meal) >= sys->t_die)
 			{
 				if ((sys->philos[i].eating != sys->n_eat))
 				{
@@ -52,8 +53,8 @@ void	*monitor_death(void *arg)
 				}
 			}
 			i++;
+			usleep(1000);
 		}
-		usleep(2000);
 	}
 	return (NULL);
 }
