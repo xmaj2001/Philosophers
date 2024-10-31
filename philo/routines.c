@@ -23,10 +23,10 @@ void	*philo_routine(void *arg)
 		philo_death(philo);
 		if (philo->sys->status == OFF)
 			break ;
-		philo_thinking(philo);
 		philo_pick_forks(philo);
 		philo_eating(philo);
 		philo_sleeping(philo);
+		philo_thinking(philo);
 	}
 	philo->sys->nt_philos--;
 	return (NULL);
